@@ -1,9 +1,8 @@
 // NPM packages
 const validator = require('validator')
+const chalk = require('chalk')
 
 // Custom packages
 const getNotes = require('./notes')
 
-console.log(getNotes())
-console.log(validator.isEmail("andrew@example.com"))
-console.log(validator.isURL("andrew@example"))
+console.log(chalk.red.bold.inverse("Success!"))

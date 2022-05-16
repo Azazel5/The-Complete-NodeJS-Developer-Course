@@ -1,5 +1,9 @@
-const fs = require('fs')
+// NPM packages
+const validator = require('validator')
 
-fs.writeFileSync('notes.txt', 'This file was created by NodeJS')
+// Custom packages
+const getNotes = require('./notes')
 
-fs.appendFileSync('notes.txt', "\nHere's some appended text")
+console.log(getNotes())
+console.log(validator.isEmail("andrew@example.com"))
+console.log(validator.isURL("andrew@example"))

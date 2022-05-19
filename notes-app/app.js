@@ -4,7 +4,7 @@ const chalk = require('chalk')
 const yargs = require('yargs')
 
 // Custom packages
-const getNotes = require('./notes')
+const notes = require('./notes')
 
 /** The process global variable has access to command line arguments. The first two
  * arguments are path related mumbo jumbo (path to NodeJS and the main file) */
@@ -30,7 +30,7 @@ yargs.command({
         }
     },
     handler: function (argv) {
-        console.log("Title:", argv.title, "and body:", argv.body)
+        notes.addNote(argv.title, argv.body)
     }
 })
 

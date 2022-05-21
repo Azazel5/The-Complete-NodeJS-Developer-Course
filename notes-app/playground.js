@@ -63,3 +63,6 @@ module.exports = getNotes
 // TLDR; arrow function don't bind their own "this". They access the "this" of the context in which
 // they're created.
 
+// Debugging can be done by placing "debugger" command where-ever you wanna check stuff out and then
+// run node with the inspect option. Then go to chrome://inspect. This'll open up the sources and
+// console as you expect it. Running the restart command restarts the whole debugging process.

@@ -1,19 +1,21 @@
-console.log('Starting')
+// Custom Packages
+require('dotenv').config()
 
-setTimeout(() => {
-    console.log('2 sec timer')
-}, 2000)
+// 3rd party packages
+const request = require('request')
 
-setTimeout(() => {
-    console.log('0 sec timer')
-}, 0)
+const weatherUrl = `http://api.weatherstack.com/current?access_key=${process.env.WEATHER_API_KEY}&query=29.4254,-98.4946&units=f`
 
-console.log('Stopping')
+request({ url: weatherUrl, json: true }, (error, response) => {
+    const currentWeather = response.body.current
+    console.log(`${currentWeather.weather_descriptions[0]}. It is currently ${currentWeather.temperature} degrees out. There is ${currentWeather.precip}% chance of rain.`)
+})
 
-/** Notes on asynchronous Node.js */
+// Geocoding
+const searchText = encodeURI("Los Angeles")
+const geoUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json?access_token=${process.env.GEOCODING_API_KEY}&limit=1`
 
-// If you have a setTimeout with 0 seconds, that is going to run after any synchronous calls like
-// console.log, strangely. 
-// Watch video #30 (Call stack, queue...) once again, after finishing building out the weather 
-// application!
-// No asynchronous callback gets run until the main function is done running...
+request({ url: geoUrl, json: true }, (error, response) => {
+    const geographicalCenter = response.body.features[0].center
+    console.log("Latitude:", geographicalCenter[1], "Longitude:", geographicalCenter[0])
+})

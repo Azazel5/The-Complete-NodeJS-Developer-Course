@@ -57,6 +57,24 @@ app.get('/weather', (req, res) => {
     })
 })
 
+// You can wildcards like this too, so if someone visits /help/hahaha, you can give them
+// a more specific response
+app.get('/help/*', (req, res) => {
+    res.render('404', {
+        title: '404 - Not Found',
+        name: 'Subhanga Upadhyay',
+        errorMessage: 'Help article not found'
+    })
+})
+
+app.get('*', (req, res) => {
+    res.render('404', {
+        title: '404 - Not Found',
+        name: 'Subhanga Upadhyay',
+        errorMessage: 'My four-oh-four'
+    })
+})
+
 app.listen(3000, () => {
     console.log("Application started on port 3000")
 })

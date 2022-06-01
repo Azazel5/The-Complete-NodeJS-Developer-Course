@@ -3,9 +3,19 @@ const path = require('path')
 
 // NPM modules
 const express = require('express')
+const hbs = require('hbs')
+
 const app = express()
 
+// Express looks for a "views" subdirectory where all the templates live. It can be customized
+// Handlebars settings. Nodemon doesn't restart the hbs files on change, but you can add a tweak
+// to the normal nodemon command to handle that as well i.e. the -e AKA extension flag. This'll
+// make nodemon watch for changes in particular file extensions
 app.set('view engine', 'hbs')
+app.set('views', path.join(__dirname, '../templates/views'))
+hbs.registerPartials(path.join(__dirname, '../templates/partials'))
+
+// Setup static directory
 app.use(express.static(path.join(__dirname, '../public')))
 
 // Rendering HTML/JSON/strings using the res.send is all A-ok
@@ -23,7 +33,9 @@ app.get('', (req, res) => {
 
 app.get('/help', (req, res) => {
     res.render('help', {
-        helpText: 'Help! I need somebody!'
+        title: 'Help Page',
+        helpText: 'Help! I need somebody!',
+        name: 'Subhanga Upadhyay'
     })
 })
 

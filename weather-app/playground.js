@@ -29,14 +29,6 @@
 //     console.log("Data is available here: ", data)
 // })
 
-//
-// Goal: Mess around with the callback pattern
-//
-// 1. Define an add function that accepts the correct arguments
-// 2. Use setTimeout to simulate a 2 second delay
-// 3. After 2 seconds are up, call the callback function with the sum
-// 4. Test your work!
-
 // const add = (num1, num2, callback) => {
 //     setTimeout(() => {
 //         const sum = num1 + num2
@@ -63,3 +55,32 @@
 // successfully received is a useful pattern.
 
 // TLDR: synchronous - return pattern works; asynchronous - callback pattern
+
+/**
+ * How to make HTTP requests using pure NodeJs
+ */
+
+const http = require('http')
+
+const url = `http://api.weatherstack.com/current?access_key=${process.env.WEATHER_API_KEY}&query=40,-75&units=f`
+
+// We have to listen for the response chunks. This module uses callbacks like 'data' or 'end'
+// to determine when data is loaded in chunks. We have to call request.end() to actually run
+// the request
+const request = http.request(url, response => {
+    let data = ''
+    
+    response.on('data', chunk => {
+        data += chunk.toString() 
+    })
+
+    response.on('end', () => {
+        console.log(data)
+    })
+})
+
+request.on('error', error => {
+    console.log(error)
+})
+
+request.end()

@@ -4,6 +4,11 @@ const path = require('path')
 // NPM modules
 const express = require('express')
 const hbs = require('hbs')
+require('dotenv').config()
+
+// Custom modules
+const forecast = require('./utils/forecast')
+const geoCode = require('./utils/geocode')
 
 const app = express()
 
@@ -51,9 +56,35 @@ app.get('/about', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
-    res.send({
-        forecast: 'Here comes the sun',
-        location: 'Boston, MA'
+    const { address } = req.query
+
+    if (!address) {
+        return res.send({
+            error: 'You must provide an address to get the weather!'
+        })
+    }
+
+    geoCode(address, (geoCodeError, { latitude, longitude, location } = {}) => {
+        if (geoCodeError) {
+            return res.send({
+                error: geoCodeError
+            })
+        }
+
+        forecast(latitude, longitude, (forecastError, forecastData) => {
+            if (forecastError) {
+                return res.send({
+                    error: forecastError
+                })
+            }
+
+            res.send({
+                location: location,
+                forecast: forecastData,
+                address: address
+            })
+        })
+
     })
 })
 

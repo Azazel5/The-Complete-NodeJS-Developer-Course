@@ -10,17 +10,26 @@ tutorial is called Handlebars. To reference a partial, use double curlies and >p
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon"  href="img/favicon.png">
-    <script src="js/app.js"></script>
+    <link rel="icon" href="img/favicon.png">
 </head>
 
 <body>
     <div class="main-content">
         {{>header}}
         <p>Use this site to get your weather</p>
+
+        <form action="">
+            <input type="text" placeholder="Location">
+            <button>Search</button>
+        </form>
+
+        <p class="p1"></p>
+        <p class="p2"></p>
     </div>
 
     {{>footer}}
+
+    <script src="js/app.js"></script>
 </body>
 
 </html>
